@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Trend Wear — Baggy Pants & Streetwear | Pakistan</title>
+
+<!-- ================= FONTS & ICONS ================= -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Work+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<!-- ================================================================
+     NOTE: This version uses hand-written CSS instead of the Tailwind
+     CDN script, so the site works even if the Tailwind script fails
+     to load (no "tailwind is not defined" errors, no dependency on
+     an external JS framework loading correctly).
+================================================================= -->
+<style>
+  /* ============================================================
+     TOKENS — edit these variables to retheme the whole site
+  ============================================================ */
+  :root{
+    --ink:#15130F;       /* page background */
+    --panel:#1E1A15;     /* section panel */
+    --panel2:#262019;    /* card / input background */
+    --sand:#F4EFE4;      /* main text */
+    --sandmute:#B9AE9A;  /* muted text */
+    --amber:#EFA13B;     /* primary accent */
+    --amberdk:#C97F22;   /* accent hover */
+    --line:rgba(244,239,228,0.08);
+    --line-strong:rgba(244,239,228,0.15);
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0;
+    font-family:'Work Sans', Arial, sans-serif;
+    background-color:var(--ink);
+    color:var(--sand);
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.display{ font-family:'Anton', sans-serif; letter-spacing:0.01em; margin:0; }
+  p{ margin:0; }
+  a{ color:inherit; text-decoration:none; }
+  img{ max-width:100%; display:block; }
+  ul{ margin:0; padding:0; list-style:none; }
+
+  .container{ max-width:72rem; margin:0 auto; padding:0 1.25rem; }
+  @media (min-width:768px){ .container{ padding:0 2rem; } }
+
+  .text-amber{ color:var(--amber); }
+  .text-sand{ color:var(--sand); }
+  .text-sandmute{ color:var(--sandmute); }
+
+  /* ============================================================
+     HEADER / NAV
+  ============================================================ */
+  header.site-header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(21,19,15,0.95);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-row{
+    height:4rem; display:flex; align-items:center; justify-content:space-between;
+  }
+  .logo{ font-family:'Anton',sans-serif; font-size:1.5rem; letter-spacing:0.02em; color:var(--sand); }
+  .nav-links{ display:none; align-items:center; gap:2rem; font-size:0.9rem; font-weight:500; color:var(--sandmute); }
+  .nav-links a:hover{ color:var(--amber); }
+  @media (min-width:768px){ .nav-links{ display:flex; } }
+
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:0.5rem;
+    font-weight:600; border:none; cursor:pointer; transition:all .15s ease;
+  }
+  .btn-amber{ background:var(--amber); color:var(--ink); padding:0.65rem 1.5rem; font-size:0.9rem; }
+  .btn-amber:hover{ background:var(--amberdk); }
+  .btn-outline{ background:transparent; color:var(--sand); border:1px solid var(--line-strong); padding:0.9rem 1.75rem; }
+  .btn-outline:hover{ border-color:var(--amber); color:var(--amber); }
+
+  .nav-cta{ display:none; }
+  @media (min-width:768px){ .nav-cta{ display:inline-flex; } }
+
+  .menu-btn{
+    display:inline-flex; background:none; border:none; color:var(--sand); font-size:1.35rem; cursor:pointer;
+  }
+  @media (min-width:768px){ .menu-btn{ display:none; } }
+
+  .mobile-menu{ display:none; border-top:1px solid var(--line); background:var(--panel); }
+  .mobile-menu.open{ display:block; }
+  .mobile-menu-inner{ padding:1rem 1.25rem 1.25rem; display:flex; flex-direction:column; gap:1rem; color:var(--sandmute); font-weight:500; }
+  .mobile-menu-inner a:hover{ color:var(--amber); }
+  @media (min-width:768px){ .mobile-menu{ display:none !important; } }
+
+  /* ============================================================
+     HERO
+  ============================================================ */
+  .hero{ position:relative; overflow:hidden; }
+  .hero-bg{
+    position:absolute; inset:0;
+    background:
+      radial-gradient(120% 140% at 15% 10%, rgba(239,161,59,0.18), transparent 55%),
+      linear-gradient(155deg, #2A2419 0%, #17140F 100%);
+  }
+  .hero-glow{
+    position:absolute; right:-6rem; top:-6rem; width:24rem; height:24rem;
+    border-radius:50%; background:rgba(239,161,59,0.10); filter:blur(70px);
+  }
+  .hero-inner{ position:relative; padding:4rem 0 6rem; }
+  @media (min-width:768px){ .hero-inner{ padding:6rem 0 8rem; } }
+
+  .eyebrow{ color:var(--amber); font-weight:600; letter-spacing:0.02em; font-size:0.9rem; margin-bottom:1rem; }
+
+  .hero-title{
+    font-size:clamp(2.75rem, 8vw, 4.5rem);
+    line-height:0.95; color:var(--sand); max-width:42rem;
+  }
+
+  .hero-sub{ margin-top:1.5rem; color:var(--sandmute); font-size:1.1rem; max-width:34rem; line-height:1.6; }
+
+  .hero-actions{ margin-top:2.25rem; display:flex; flex-wrap:wrap; gap:1rem; }
+
+  .stat-grid{
+    margin-top:3.5rem; display:grid; grid-template-columns:repeat(3,1fr);
+    max-width:28rem; gap:1.5rem;
+  }
+  .stat-num{ font-size:1.9rem; color:var(--amber); }
+  .stat-label{ font-size:0.75rem; color:var(--sandmute); margin-top:0.25rem; }
+
+  /* ============================================================
+     SECTIONS
+  ============================================================ */
+  section{ padding:5rem 0; }
+  .bg-panel-section{ background:var(--panel); }
+  .bg-ink-section{ background:var(--ink); }
+
+  .section-title{ font-size:clamp(2.25rem, 5vw, 3rem); color:var(--sand); margin-bottom:3rem; }
+
+  /* art frame placeholder */
+  .art-frame{
+    background:
+      radial-gradient(120% 140% at 15% 10%, rgba(239,161,59,0.18), transparent 55%),
+      linear-gradient(155deg, #2A2419 0%, #17140F 100%);
+    border:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center; position:relative;
+  }
+  .aspect-square{ aspect-ratio:1/1; }
+  .aspect-portrait{ aspect-ratio:4/5; }
+
+  /* ============================================================
+     ABOUT
+  ============================================================ */
+  .about-grid{ display:grid; gap:2.5rem; align-items:center; }
+  @media (min-width:768px){ .about-grid{ grid-template-columns:2fr 3fr; } }
+
+  .feature-list{ margin-top:2rem; display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; }
+  .feature-item{ display:flex; gap:0.75rem; align-items:flex-start; }
+  .feature-item i{ color:var(--amber); margin-top:0.2rem; }
+  .feature-item .f-title{ font-weight:600; color:var(--sand); }
+  .feature-item .f-sub{ font-size:0.85rem; color:var(--sandmute); }
+
+  /* ============================================================
+     PRODUCTS
+  ============================================================ */
+  .product-grid{ display:grid; grid-template-columns:1fr; gap:2rem; }
+  @media (min-width:640px){ .product-grid{ grid-template-columns:1fr 1fr; } }
+  @media (min-width:1024px){ .product-grid{ grid-template-columns:1fr 1fr 1fr; } }
+
+  .product-card{ background:var(--panel); border:1px solid var(--line); display:flex; flex-direction:column; }
+  .product-card .art-frame i{ color:rgba(244,239,228,0.2); font-size:5.5rem; }
+  .badge{
+    position:absolute; top:0.75rem; left:0.75rem; background:var(--amber); color:var(--ink);
+    font-size:0.7rem; font-weight:700; padding:0.25rem 0.6rem;
+  }
+  .product-body{ padding:1.5rem; display:flex; flex-direction:column; flex:1; }
+  .product-name{ font-size:1.25rem; font-weight:700; color:var(--sand); }
+  .product-desc{ color:var(--sandmute); font-size:0.9rem; margin-top:0.5rem; flex:1; }
+  .size-label{ font-size:0.75rem; color:var(--sandmute); margin-bottom:0.5rem; }
+  .size-row{ display:flex; flex-wrap:wrap; gap:0.5rem; }
+  .size-chip{
+    border:1px solid var(--line-strong); color:var(--sand); font-size:0.85rem;
+    padding:0.25rem 0.75rem; transition:all .15s ease;
+  }
+  .size-chip:hover{ border-color:var(--amber); color:var(--amber); }
+  .price-row{ margin-top:1.25rem; display:flex; align-items:center; justify-content:space-between; gap:0.75rem; flex-wrap:wrap; }
+  .price{ font-size:1.5rem; color:var(--amber); font-family:'Anton',sans-serif; }
+  .wa-order-btn{ background:var(--amber); color:var(--ink); font-size:0.85rem; font-weight:600; padding:0.5rem 1rem; }
+  .wa-order-btn:hover{ background:var(--amberdk); }
+  .note{ color:var(--sandmute); font-size:0.85rem; margin-top:2rem; }
+
+  /* ============================================================
+     DELIVERY
+  ============================================================ */
+  .delivery-grid{ display:grid; grid-template-columns:1fr; gap:1.5rem; }
+  @media (min-width:640px){ .delivery-grid{ grid-template-columns:1fr 1fr; } }
+  @media (min-width:1024px){ .delivery-grid{ grid-template-columns:repeat(4,1fr); } }
+  .info-card{ background:var(--panel2); border:1px solid var(--line); padding:1.5rem; }
+  .info-card i{ color:var(--amber); font-size:1.5rem; margin-bottom:1rem; display:block; }
+  .info-card .i-title{ font-weight:700; color:var(--sand); margin-bottom:0.25rem; }
+  .info-card .i-sub{ color:var(--sandmute); font-size:0.9rem; }
+
+  .info-banner{
+    margin-top:2.5rem; background:var(--panel2); border:1px solid rgba(239,161,59,0.3);
+    padding:1.5rem; display:flex; flex-direction:column; gap:1rem; justify-content:space-between;
+  }
+  @media (min-width:640px){ .info-banner{ flex-direction:row; align-items:center; } }
+  .info-banner-text{ display:flex; align-items:center; gap:1rem; }
+  .info-banner-text i{ color:var(--amber); font-size:1.5rem; }
+
+  /* ============================================================
+     CONTACT / FORM
+  ============================================================ */
+  .contact-grid{ display:grid; grid-template-columns:1fr; gap:2.5rem; }
+  @media (min-width:1024px){ .contact-grid{ grid-template-columns:2fr 3fr; } }
+
+  .contact-item{ display:flex; align-items:flex-start; gap:1rem; margin-bottom:1.25rem; }
+  .contact-item i{ color:var(--amber); font-size:1.15rem; margin-top:0.2rem; }
+  .contact-item .c-title{ font-weight:600; color:var(--sand); }
+  .contact-item .c-sub{ color:var(--sandmute); font-size:0.9rem; }
+
+  .social-row{ display:flex; gap:1rem; margin-top:1.5rem; }
+  .social-btn{
+    width:2.5rem; height:2.5rem; display:flex; align-items:center; justify-content:center;
+    border:1px solid var(--line-strong); color:var(--sand); transition:all .15s ease;
+  }
+  .social-btn:hover{ border-color:var(--amber); color:var(--amber); }
+
+  .form-panel{ background:var(--panel); border:1px solid var(--line); padding:1.5rem; }
+  @media (min-width:640px){ .form-panel{ padding:2rem; } }
+
+  .form-row{ display:grid; grid-template-columns:1fr; gap:1.25rem; margin-bottom:1.25rem; }
+  @media (min-width:640px){ .form-row{ grid-template-columns:1fr 1fr; } }
+
+  label{ display:block; font-size:0.9rem; font-weight:500; color:var(--sandmute); margin-bottom:0.5rem; }
+  input[type="text"], input[type="tel"], input[type="email"], select, textarea{
+    width:100%; background:var(--panel2); border:1px solid var(--line-strong); color:var(--sand);
+    padding:0.75rem 1rem; font-family:inherit; font-size:1rem;
+  }
+  input:focus, select:focus, textarea:focus{ outline:2px solid var(--amber); outline-offset:2px; border-color:var(--amber); }
+  textarea{ resize:vertical; }
+
+  .field{ margin-bottom:1.25rem; }
+  .submit-btn{ width:100%; background:var(--amber); color:var(--ink); font-weight:700; padding:0.9rem; font-size:1rem; }
+  .submit-btn:hover{ background:var(--amberdk); }
+  .submit-btn:disabled{ opacity:0.7; cursor:not-allowed; }
+  .form-status{ font-size:0.9rem; margin-top:1rem; display:none; }
+  .form-status.show{ display:block; }
+  .status-ok{ color:var(--amber); }
+  .status-err{ color:#f87171; }
+
+  /* ============================================================
+     FOOTER
+  ============================================================ */
+  footer{ background:var(--panel); border-top:1px solid var(--line); padding:2.5rem 0; }
+  .footer-row{ display:flex; flex-direction:column; align-items:center; gap:1rem; text-align:center; }
+  @media (min-width:640px){ .footer-row{ flex-direction:row; justify-content:space-between; text-align:left; } }
+  .footer-links{ display:flex; gap:0.75rem; color:var(--sandmute); font-size:0.9rem; }
+  .footer-links a:hover{ color:var(--amber); }
+
+  /* ============================================================
+     WHATSAPP FLOAT
+  ============================================================ */
+  .wa-float{
+    position:fixed; bottom:1.5rem; right:1.5rem; z-index:50;
+    width:3.5rem; height:3.5rem; border-radius:50%;
+    background:#25D366; display:flex; align-items:center; justify-content:center;
+    color:#fff; font-size:1.5rem; box-shadow:0 10px 25px rgba(37,211,102,0.35);
+    animation:pulseRing 2.2s ease-out infinite;
+  }
+  @keyframes pulseRing{
+    0%{ box-shadow:0 0 0 0 rgba(37,211,102,.45); }
+    100%{ box-shadow:0 0 0 16px rgba(37,211,102,0); }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .wa-float{ animation:none; }
+    html{ scroll-behavior:auto; }
+  }
+
+  a:focus-visible, button:focus-visible{ outline:2px solid var(--amber); outline-offset:2px; }
+  ::selection{ background:var(--amber); color:var(--ink); }
+</style>
+</head>
+
+<body>
+
+<!-- ======================================================================
+     NAVBAR
+====================================================================== -->
+<header class="site-header">
+  <div class="container nav-row">
+    <a href="#top" class="logo">TREND<span class="text-amber">WEAR</span></a>
+    <nav class="nav-links">
+      <a href="#products">Products</a>
+      <a href="#about">About</a>
+      <a href="#delivery">Delivery</a>
+      <a href="#contact">Order / Contact</a>
+    </nav>
+    <a href="#contact" class="btn btn-amber nav-cta">Order Now</a>
+    <button id="menuBtn" class="menu-btn" aria-label="Open menu" aria-expanded="false">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+  </div>
+  <div id="mobileMenu" class="mobile-menu">
+    <div class="mobile-menu-inner">
+      <a href="#products">Products</a>
+      <a href="#about">About</a>
+      <a href="#delivery">Delivery</a>
+      <a href="#contact">Order / Contact</a>
+    </div>
+  </div>
+</header>
+
+<!-- ======================================================================
+     HERO
+====================================================================== -->
+<section id="top" class="hero" style="padding:0;">
+  <div class="hero-bg"></div>
+  <div class="hero-glow"></div>
+  <div class="container hero-inner">
+    <p class="eyebrow">Baggy Pants · Streetwear · Pakistan</p>
+    <h1 class="hero-title">FIT LOOSE.<br>MOVE FREE.<br><span class="text-amber">DRESS LOUD.</span></h1>
+    <p class="hero-sub">
+      Trend Wear brings you baggy pants and streetwear built for comfort and cut for style —
+      shipped straight to your door, anywhere in Pakistan.
+    </p>
+    <div class="hero-actions">
+      <a href="#products" class="btn btn-amber" style="padding:0.9rem 1.75rem; font-size:1rem;">Shop the Collection</a>
+      <a href="#contact" class="btn btn-outline">Place an Order</a>
+    </div>
+    <div class="stat-grid">
+      <div><p class="display stat-num">COD</p><p class="stat-label">Cash on Delivery</p></div>
+      <div><p class="display stat-num">2–5</p><p class="stat-label">Days Delivery*</p></div>
+      <div><p class="display stat-num">S–XXL</p><p class="stat-label">All Sizes</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================================
+     ABOUT
+====================================================================== -->
+<section id="about" class="bg-panel-section">
+  <div class="container about-grid">
+    <div>
+      <div class="art-frame aspect-portrait">
+        <!-- EDIT: replace this icon with a real brand photo:
+             <img src="your-image.jpg" style="width:100%;height:100%;object-fit:cover;" alt="Trend Wear"> -->
+        <i class="fa-solid fa-person-walking text-amber" style="font-size:6rem; opacity:0.7;"></i>
+      </div>
+    </div>
+    <div>
+      <p class="eyebrow">About Trend Wear</p>
+      <h2 class="section-title" style="margin-bottom:1.5rem;">MADE FOR THE<br>EVERYDAY MOVE</h2>
+      <!-- EDIT: rewrite this paragraph with your own brand story -->
+      <p class="text-sandmute" style="font-size:1.1rem; line-height:1.7;">
+        Trend Wear is a Pakistan-based clothing brand focused on baggy pants and everyday
+        streetwear. We pick fabrics that hold up, cuts that actually fit right, and prices
+        that make sense — so you can dress the way you want without overthinking it.
+      </p>
+      <div class="feature-list">
+        <div class="feature-item"><i class="fa-solid fa-truck-fast"></i><div><p class="f-title">Nationwide Delivery</p><p class="f-sub">All over Pakistan</p></div></div>
+        <div class="feature-item"><i class="fa-solid fa-ruler"></i><div><p class="f-title">True-to-Size Fit</p><p class="f-sub">Sizes S to XXL</p></div></div>
+        <div class="feature-item"><i class="fa-solid fa-money-bill-wave"></i><div><p class="f-title">Cash on Delivery</p><p class="f-sub">Pay when it arrives</p></div></div>
+        <div class="feature-item"><i class="fa-brands fa-whatsapp"></i><div><p class="f-title">Order on WhatsApp</p><p class="f-sub">Fast & simple</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================================
+     PRODUCTS
+     EDIT: duplicate a .product-card block to add a new product.
+====================================================================== -->
+<section id="products" class="bg-ink-section">
+  <div class="container">
+    <p class="eyebrow">Our Products</p>
+    <h2 class="section-title">THE COLLECTION</h2>
+
+    <div class="product-grid">
+
+      <!-- ============ PRODUCT 1: Black Baggy Pants (featured) ============ -->
+      <div class="product-card">
+        <div class="art-frame aspect-square">
+          <span class="badge">BESTSELLER</span>
+          <i class="fa-solid fa-shirt"></i>
+        </div>
+        <div class="product-body">
+          <h3 class="product-name">Black Baggy Pants</h3>
+          <p class="product-desc">
+            Our signature baggy fit — relaxed through the hip and thigh, tapered ankle,
+            heavyweight cotton blend. Everyday streetwear staple.
+          </p>
+          <div style="margin-top:1rem;">
+            <p class="size-label">Available Sizes</p>
+            <div class="size-row">
+              <span class="size-chip">S</span><span class="size-chip">M</span>
+              <span class="size-chip">L</span><span class="size-chip">XL</span>
+              <span class="size-chip">XXL</span>
+            </div>
+          </div>
+          <div class="price-row">
+            <p class="price">PKR 3,500</p>
+            <a href="https://wa.me/923000000000?text=Hi%20Trend%20Wear!%20I%20want%20to%20order%20the%20Black%20Baggy%20Pants%20(all%20sizes%20available).%20My%20size%3A%20"
+               target="_blank" rel="noopener" class="btn wa-order-btn">Order on WhatsApp</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ PRODUCT 2: EDIT price/details as needed ============ -->
+      <div class="product-card">
+        <div class="art-frame aspect-square"><i class="fa-solid fa-shirt"></i></div>
+        <div class="product-body">
+          <h3 class="product-name">Khaki Baggy Pants</h3>
+          <p class="product-desc">Cargo-inspired baggy pants in khaki, with side pockets and an adjustable waist.</p>
+          <div style="margin-top:1rem;">
+            <p class="size-label">Available Sizes</p>
+            <div class="size-row">
+              <span class="size-chip">S</span><span class="size-chip">M</span>
+              <span class="size-chip">L</span><span class="size-chip">XL</span>
+            </div>
+          </div>
+          <div class="price-row">
+            <!-- EDIT: update price -->
+            <p class="price">PKR 3,200</p>
+            <a href="https://wa.me/923000000000?text=Hi%20Trend%20Wear!%20I%20want%20to%20order%20the%20Khaki%20Baggy%20Pants.%20My%20size%3A%20"
+               target="_blank" rel="noopener" class="btn wa-order-btn">Order on WhatsApp</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ PRODUCT 3: EDIT price/details as needed ============ -->
+      <div class="product-card">
+        <div class="art-frame aspect-square"><i class="fa-solid fa-shirt"></i></div>
+        <div class="product-body">
+          <h3 class="product-name">Wide-Leg Trousers</h3>
+          <p class="product-desc">Smart-casual wide-leg trousers, lightweight fabric, perfect for everyday wear.</p>
+          <div style="margin-top:1rem;">
+            <p class="size-label">Available Sizes</p>
+            <div class="size-row">
+              <span class="size-chip">S</span><span class="size-chip">M</span><span class="size-chip">L</span>
+            </div>
+          </div>
+          <div class="price-row">
+            <!-- EDIT: update price -->
+            <p class="price">PKR 2,800</p>
+            <a href="https://wa.me/923000000000?text=Hi%20Trend%20Wear!%20I%20want%20to%20order%20the%20Wide-Leg%20Trousers.%20My%20size%3A%20"
+               target="_blank" rel="noopener" class="btn wa-order-btn">Order on WhatsApp</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <p class="note">* Prices for products other than Black Baggy Pants are placeholders — edit them to match your real prices.</p>
+  </div>
+</section>
+
+<!-- ======================================================================
+     DELIVERY / ORDER INFORMATION
+====================================================================== -->
+<section id="delivery" class="bg-panel-section">
+  <div class="container">
+    <p class="eyebrow">Good to Know</p>
+    <h2 class="section-title">DELIVERY &amp; ORDER INFO</h2>
+
+    <div class="delivery-grid">
+      <div class="info-card">
+        <i class="fa-solid fa-truck"></i>
+        <p class="i-title">Delivery Time</p>
+        <p class="i-sub">2–5 working days across Pakistan, depending on your city.</p>
+      </div>
+      <div class="info-card">
+        <i class="fa-solid fa-money-bill-wave"></i>
+        <p class="i-title">Payment</p>
+        <p class="i-sub">Cash on Delivery (COD) available nationwide. Bank transfer on request.</p>
+      </div>
+      <div class="info-card">
+        <i class="fa-solid fa-box"></i>
+        <p class="i-title">Delivery Charges</p>
+        <p class="i-sub">Rs. 200 flat delivery fee across Pakistan. Free on orders above Rs. 5,000.</p>
+      </div>
+      <div class="info-card">
+        <i class="fa-solid fa-rotate-left"></i>
+        <p class="i-title">Exchange Policy</p>
+        <p class="i-sub">Size exchange within 3 days of delivery, item must be unused and unwashed.</p>
+      </div>
+    </div>
+
+    <div class="info-banner">
+      <div class="info-banner-text">
+        <i class="fa-solid fa-circle-info"></i>
+        <p class="text-sand">To place an order, message us your <span class="text-amber" style="font-weight:600;">product name, size and delivery address</span> via WhatsApp or the form below.</p>
+      </div>
+      <a href="#contact" class="btn btn-amber" style="white-space:nowrap;">Go to Order Form</a>
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================================
+     CONTACT / ORDER FORM (Web3Forms)
+====================================================================== -->
+<section id="contact" class="bg-ink-section">
+  <div class="container contact-grid">
+
+    <div>
+      <p class="eyebrow">Get In Touch</p>
+      <h2 class="section-title" style="margin-bottom:1.5rem;">ORDER OR ASK<br>A QUESTION</h2>
+      <p class="text-sandmute" style="margin-bottom:2rem;">Fill the form and we'll get back to you, or reach out directly using the details below.</p>
+
+      <div class="contact-item"><i class="fa-solid fa-location-dot"></i><div><p class="c-title">Address</p><p class="c-sub">Pakistan</p></div></div>
+      <div class="contact-item"><i class="fa-solid fa-phone"></i><div><p class="c-title">Phone</p><p class="c-sub">+92 300 0000000</p></div></div>
+      <div class="contact-item"><i class="fa-brands fa-whatsapp"></i><div><p class="c-title">WhatsApp</p><p class="c-sub">+92 300 0000000</p></div></div>
+      <div class="contact-item"><i class="fa-solid fa-envelope"></i><div><p class="c-title">Email</p><p class="c-sub">info@trendwear.pk</p></div></div>
+
+      <div class="social-row">
+        <a href="#" class="social-btn" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+        <a href="#" class="social-btn" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+        <a href="#" class="social-btn" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+      </div>
+    </div>
+
+    <div class="form-panel">
+      <form id="orderForm">
+        <!-- ============================================================
+             WEB3FORMS SETUP
+             1) Go to https://web3forms.com and create a free access key.
+             2) Paste that key below, replacing xxxx-xxxx-xxxx.
+             3) Order/contact messages will be emailed to you automatically.
+        ============================================================= -->
+        <input type="hidden" name="access_key" value="xxxx-xxxx-xxxx">
+        <input type="hidden" name="subject" value="New Order/Enquiry — Trend Wear">
+        <input type="hidden" name="from_name" value="Trend Wear Website">
+        <input type="checkbox" name="botcheck" style="display:none">
+
+        <div class="form-row">
+          <div>
+            <label for="name">Full Name</label>
+            <input id="name" name="name" type="text" required placeholder="Your name">
+          </div>
+          <div>
+            <label for="phone">Phone Number</label>
+            <input id="phone" name="phone" type="tel" required placeholder="03XX-XXXXXXX">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div>
+            <label for="product">Product</label>
+            <select id="product" name="product">
+              <option>Black Baggy Pants — PKR 3,500</option>
+              <option>Khaki Baggy Pants</option>
+              <option>Wide-Leg Trousers</option>
+              <option>Other / Not sure yet</option>
+            </select>
+          </div>
+          <div>
+            <label for="size">Size</label>
+            <select id="size" name="size">
+              <option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="address">Delivery Address</label>
+          <input id="address" name="address" type="text" required placeholder="House / street, city">
+        </div>
+
+        <div class="field">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="4" placeholder="Anything else we should know?"></textarea>
+        </div>
+
+        <button type="submit" id="submitBtn" class="submit-btn">Send Order</button>
+        <p id="formStatus" class="form-status"></p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================================
+     FOOTER
+====================================================================== -->
+<footer>
+  <div class="container footer-row">
+    <a href="#top" class="logo" style="font-size:1.25rem;">TREND<span class="text-amber">WEAR</span></a>
+    <p class="text-sandmute" style="font-size:0.9rem;">&copy; <span id="year"></span> Trend Wear. All rights reserved. Based in Pakistan.</p>
+    <div class="footer-links">
+      <a href="#products">Products</a><span>·</span><a href="#contact">Contact</a>
+    </div>
+  </div>
+</footer>
+
+<!-- ======================================================================
+     FLOATING WHATSAPP BUTTON
+     EDIT: replace 923000000000 with your real WhatsApp number
+     (country code + number, no + or spaces).
+====================================================================== -->
+<a href="https://wa.me/923000000000?text=Hi%20Trend%20Wear!%20I'd%20like%20to%20ask%20about%20your%20products."
+   target="_blank" rel="noopener" class="wa-float" aria-label="Chat with us on WhatsApp">
+  <i class="fa-brands fa-whatsapp"></i>
+</a>
+
+<!-- ======================================================================
+     SCRIPTS (plain JavaScript, no external framework required)
+====================================================================== -->
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  var menuBtn = document.getElementById('menuBtn');
+  var mobileMenu = document.getElementById('mobileMenu');
+  menuBtn.addEventListener('click', function () {
+    var isOpen = mobileMenu.classList.contains('open');
+    mobileMenu.classList.toggle('open');
+    menuBtn.setAttribute('aria-expanded', String(!isOpen));
+  });
+  mobileMenu.querySelectorAll('a').forEach(function (link) {
+    link.addEventListener('click', function () { mobileMenu.classList.remove('open'); });
+  });
+
+  // ===================================================================
+  // WEB3FORMS SUBMISSION — sends the form data to your email.
+  // Paste your real access_key in the hidden input above before use.
+  // ===================================================================
+  var form = document.getElementById('orderForm');
+  var submitBtn = document.getElementById('submitBtn');
+  var status = document.getElementById('formStatus');
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending...';
+    status.classList.remove('show');
+
+    var formData = new FormData(form);
+    var object = Object.fromEntries(formData);
+    var json = JSON.stringify(object);
+
+    fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: json
+    })
+      .then(function (response) { return response.json(); })
+      .then(function (result) {
+        if (result.success) {
+          status.textContent = "Thanks! Your order/message has been sent — we'll contact you shortly.";
+          status.className = 'form-status show status-ok';
+          form.reset();
+        } else {
+          status.textContent = 'Something went wrong. Please try again or message us on WhatsApp.';
+          status.className = 'form-status show status-err';
+        }
+      })
+      .catch(function () {
+        status.textContent = 'Network error. Please try again or message us on WhatsApp.';
+        status.className = 'form-status show status-err';
+      })
+      .finally(function () {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Send Order';
+      });
+  });
+</script>
+
+</body>
+</html>
